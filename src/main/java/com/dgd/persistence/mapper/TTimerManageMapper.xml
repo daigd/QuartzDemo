@@ -1,0 +1,434 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.dgd.persistence.dao.TTimerManageMapper" >
+  <resultMap id="BaseResultMap" type="com.dgd.entity.TTimerManage" >
+    <id column="timer_id" property="timerId" jdbcType="INTEGER" />
+    <result column="timer_job_name" property="timerJobName" jdbcType="VARCHAR" />
+    <result column="timer_trigger_name" property="timerTriggerName" jdbcType="VARCHAR" />
+    <result column="timer_cron_expression" property="timerCronExpression" jdbcType="VARCHAR" />
+    <result column="timer_target_object" property="timerTargetObject" jdbcType="VARCHAR" />
+    <result column="timer_method_name" property="timerMethodName" jdbcType="VARCHAR" />
+    <result column="timer_start_time" property="timerStartTime" jdbcType="TIMESTAMP" />
+    <result column="timer_end_time" property="timerEndTime" jdbcType="TIMESTAMP" />
+    <result column="timer_status" property="timerStatus" jdbcType="INTEGER" />
+    <result column="timer_description" property="timerDescription" jdbcType="VARCHAR" />
+    <result column="create_user_id" property="createUserId" jdbcType="INTEGER" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="modify_user_id" property="modifyUserId" jdbcType="INTEGER" />
+    <result column="modify_time" property="modifyTime" jdbcType="TIMESTAMP" />
+    <result column="extend1" property="extend1" jdbcType="VARCHAR" />
+    <result column="extend2" property="extend2" jdbcType="VARCHAR" />
+    <result column="extend3" property="extend3" jdbcType="VARCHAR" />
+    <result column="extend4" property="extend4" jdbcType="VARCHAR" />
+    <result column="extend5" property="extend5" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    timer_id, timer_job_name, timer_trigger_name, timer_cron_expression, timer_target_object, 
+    timer_method_name, timer_start_time, timer_end_time, timer_status, timer_description, 
+    create_user_id, create_time, modify_user_id, modify_time, extend1, extend2, extend3, 
+    extend4, extend5
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.dgd.entity.TTimerManageExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from t_timer_manage
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_timer_manage
+    where timer_id = #{timerId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from t_timer_manage
+    where timer_id = #{timerId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.dgd.entity.TTimerManageExample" >
+    delete from t_timer_manage
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.dgd.entity.TTimerManage" >
+    <selectKey resultType="java.lang.Integer" keyProperty="timerId" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into t_timer_manage (timer_job_name, timer_trigger_name, timer_cron_expression, 
+      timer_target_object, timer_method_name, timer_start_time, 
+      timer_end_time, timer_status, timer_description, 
+      create_user_id, create_time, modify_user_id, 
+      modify_time, extend1, extend2, 
+      extend3, extend4, extend5
+      )
+    values (#{timerJobName,jdbcType=VARCHAR}, #{timerTriggerName,jdbcType=VARCHAR}, #{timerCronExpression,jdbcType=VARCHAR}, 
+      #{timerTargetObject,jdbcType=VARCHAR}, #{timerMethodName,jdbcType=VARCHAR}, #{timerStartTime,jdbcType=TIMESTAMP}, 
+      #{timerEndTime,jdbcType=TIMESTAMP}, #{timerStatus,jdbcType=INTEGER}, #{timerDescription,jdbcType=VARCHAR}, 
+      #{createUserId,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, #{modifyUserId,jdbcType=INTEGER}, 
+      #{modifyTime,jdbcType=TIMESTAMP}, #{extend1,jdbcType=VARCHAR}, #{extend2,jdbcType=VARCHAR}, 
+      #{extend3,jdbcType=VARCHAR}, #{extend4,jdbcType=VARCHAR}, #{extend5,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.dgd.entity.TTimerManage" >
+    <selectKey resultType="java.lang.Integer" keyProperty="timerId" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into t_timer_manage
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="timerJobName != null" >
+        timer_job_name,
+      </if>
+      <if test="timerTriggerName != null" >
+        timer_trigger_name,
+      </if>
+      <if test="timerCronExpression != null" >
+        timer_cron_expression,
+      </if>
+      <if test="timerTargetObject != null" >
+        timer_target_object,
+      </if>
+      <if test="timerMethodName != null" >
+        timer_method_name,
+      </if>
+      <if test="timerStartTime != null" >
+        timer_start_time,
+      </if>
+      <if test="timerEndTime != null" >
+        timer_end_time,
+      </if>
+      <if test="timerStatus != null" >
+        timer_status,
+      </if>
+      <if test="timerDescription != null" >
+        timer_description,
+      </if>
+      <if test="createUserId != null" >
+        create_user_id,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="modifyUserId != null" >
+        modify_user_id,
+      </if>
+      <if test="modifyTime != null" >
+        modify_time,
+      </if>
+      <if test="extend1 != null" >
+        extend1,
+      </if>
+      <if test="extend2 != null" >
+        extend2,
+      </if>
+      <if test="extend3 != null" >
+        extend3,
+      </if>
+      <if test="extend4 != null" >
+        extend4,
+      </if>
+      <if test="extend5 != null" >
+        extend5,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="timerJobName != null" >
+        #{timerJobName,jdbcType=VARCHAR},
+      </if>
+      <if test="timerTriggerName != null" >
+        #{timerTriggerName,jdbcType=VARCHAR},
+      </if>
+      <if test="timerCronExpression != null" >
+        #{timerCronExpression,jdbcType=VARCHAR},
+      </if>
+      <if test="timerTargetObject != null" >
+        #{timerTargetObject,jdbcType=VARCHAR},
+      </if>
+      <if test="timerMethodName != null" >
+        #{timerMethodName,jdbcType=VARCHAR},
+      </if>
+      <if test="timerStartTime != null" >
+        #{timerStartTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="timerEndTime != null" >
+        #{timerEndTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="timerStatus != null" >
+        #{timerStatus,jdbcType=INTEGER},
+      </if>
+      <if test="timerDescription != null" >
+        #{timerDescription,jdbcType=VARCHAR},
+      </if>
+      <if test="createUserId != null" >
+        #{createUserId,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyUserId != null" >
+        #{modifyUserId,jdbcType=INTEGER},
+      </if>
+      <if test="modifyTime != null" >
+        #{modifyTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="extend1 != null" >
+        #{extend1,jdbcType=VARCHAR},
+      </if>
+      <if test="extend2 != null" >
+        #{extend2,jdbcType=VARCHAR},
+      </if>
+      <if test="extend3 != null" >
+        #{extend3,jdbcType=VARCHAR},
+      </if>
+      <if test="extend4 != null" >
+        #{extend4,jdbcType=VARCHAR},
+      </if>
+      <if test="extend5 != null" >
+        #{extend5,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.dgd.entity.TTimerManageExample" resultType="java.lang.Integer" >
+    select count(*) from t_timer_manage
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update t_timer_manage
+    <set >
+      <if test="record.timerId != null" >
+        timer_id = #{record.timerId,jdbcType=INTEGER},
+      </if>
+      <if test="record.timerJobName != null" >
+        timer_job_name = #{record.timerJobName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.timerTriggerName != null" >
+        timer_trigger_name = #{record.timerTriggerName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.timerCronExpression != null" >
+        timer_cron_expression = #{record.timerCronExpression,jdbcType=VARCHAR},
+      </if>
+      <if test="record.timerTargetObject != null" >
+        timer_target_object = #{record.timerTargetObject,jdbcType=VARCHAR},
+      </if>
+      <if test="record.timerMethodName != null" >
+        timer_method_name = #{record.timerMethodName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.timerStartTime != null" >
+        timer_start_time = #{record.timerStartTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.timerEndTime != null" >
+        timer_end_time = #{record.timerEndTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.timerStatus != null" >
+        timer_status = #{record.timerStatus,jdbcType=INTEGER},
+      </if>
+      <if test="record.timerDescription != null" >
+        timer_description = #{record.timerDescription,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createUserId != null" >
+        create_user_id = #{record.createUserId,jdbcType=INTEGER},
+      </if>
+      <if test="record.createTime != null" >
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.modifyUserId != null" >
+        modify_user_id = #{record.modifyUserId,jdbcType=INTEGER},
+      </if>
+      <if test="record.modifyTime != null" >
+        modify_time = #{record.modifyTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.extend1 != null" >
+        extend1 = #{record.extend1,jdbcType=VARCHAR},
+      </if>
+      <if test="record.extend2 != null" >
+        extend2 = #{record.extend2,jdbcType=VARCHAR},
+      </if>
+      <if test="record.extend3 != null" >
+        extend3 = #{record.extend3,jdbcType=VARCHAR},
+      </if>
+      <if test="record.extend4 != null" >
+        extend4 = #{record.extend4,jdbcType=VARCHAR},
+      </if>
+      <if test="record.extend5 != null" >
+        extend5 = #{record.extend5,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update t_timer_manage
+    set timer_id = #{record.timerId,jdbcType=INTEGER},
+      timer_job_name = #{record.timerJobName,jdbcType=VARCHAR},
+      timer_trigger_name = #{record.timerTriggerName,jdbcType=VARCHAR},
+      timer_cron_expression = #{record.timerCronExpression,jdbcType=VARCHAR},
+      timer_target_object = #{record.timerTargetObject,jdbcType=VARCHAR},
+      timer_method_name = #{record.timerMethodName,jdbcType=VARCHAR},
+      timer_start_time = #{record.timerStartTime,jdbcType=TIMESTAMP},
+      timer_end_time = #{record.timerEndTime,jdbcType=TIMESTAMP},
+      timer_status = #{record.timerStatus,jdbcType=INTEGER},
+      timer_description = #{record.timerDescription,jdbcType=VARCHAR},
+      create_user_id = #{record.createUserId,jdbcType=INTEGER},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      modify_user_id = #{record.modifyUserId,jdbcType=INTEGER},
+      modify_time = #{record.modifyTime,jdbcType=TIMESTAMP},
+      extend1 = #{record.extend1,jdbcType=VARCHAR},
+      extend2 = #{record.extend2,jdbcType=VARCHAR},
+      extend3 = #{record.extend3,jdbcType=VARCHAR},
+      extend4 = #{record.extend4,jdbcType=VARCHAR},
+      extend5 = #{record.extend5,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.dgd.entity.TTimerManage" >
+    update t_timer_manage
+    <set >
+      <if test="timerJobName != null" >
+        timer_job_name = #{timerJobName,jdbcType=VARCHAR},
+      </if>
+      <if test="timerTriggerName != null" >
+        timer_trigger_name = #{timerTriggerName,jdbcType=VARCHAR},
+      </if>
+      <if test="timerCronExpression != null" >
+        timer_cron_expression = #{timerCronExpression,jdbcType=VARCHAR},
+      </if>
+      <if test="timerTargetObject != null" >
+        timer_target_object = #{timerTargetObject,jdbcType=VARCHAR},
+      </if>
+      <if test="timerMethodName != null" >
+        timer_method_name = #{timerMethodName,jdbcType=VARCHAR},
+      </if>
+      <if test="timerStartTime != null" >
+        timer_start_time = #{timerStartTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="timerEndTime != null" >
+        timer_end_time = #{timerEndTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="timerStatus != null" >
+        timer_status = #{timerStatus,jdbcType=INTEGER},
+      </if>
+      <if test="timerDescription != null" >
+        timer_description = #{timerDescription,jdbcType=VARCHAR},
+      </if>
+      <if test="createUserId != null" >
+        create_user_id = #{createUserId,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyUserId != null" >
+        modify_user_id = #{modifyUserId,jdbcType=INTEGER},
+      </if>
+      <if test="modifyTime != null" >
+        modify_time = #{modifyTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="extend1 != null" >
+        extend1 = #{extend1,jdbcType=VARCHAR},
+      </if>
+      <if test="extend2 != null" >
+        extend2 = #{extend2,jdbcType=VARCHAR},
+      </if>
+      <if test="extend3 != null" >
+        extend3 = #{extend3,jdbcType=VARCHAR},
+      </if>
+      <if test="extend4 != null" >
+        extend4 = #{extend4,jdbcType=VARCHAR},
+      </if>
+      <if test="extend5 != null" >
+        extend5 = #{extend5,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where timer_id = #{timerId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.dgd.entity.TTimerManage" >
+    update t_timer_manage
+    set timer_job_name = #{timerJobName,jdbcType=VARCHAR},
+      timer_trigger_name = #{timerTriggerName,jdbcType=VARCHAR},
+      timer_cron_expression = #{timerCronExpression,jdbcType=VARCHAR},
+      timer_target_object = #{timerTargetObject,jdbcType=VARCHAR},
+      timer_method_name = #{timerMethodName,jdbcType=VARCHAR},
+      timer_start_time = #{timerStartTime,jdbcType=TIMESTAMP},
+      timer_end_time = #{timerEndTime,jdbcType=TIMESTAMP},
+      timer_status = #{timerStatus,jdbcType=INTEGER},
+      timer_description = #{timerDescription,jdbcType=VARCHAR},
+      create_user_id = #{createUserId,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      modify_user_id = #{modifyUserId,jdbcType=INTEGER},
+      modify_time = #{modifyTime,jdbcType=TIMESTAMP},
+      extend1 = #{extend1,jdbcType=VARCHAR},
+      extend2 = #{extend2,jdbcType=VARCHAR},
+      extend3 = #{extend3,jdbcType=VARCHAR},
+      extend4 = #{extend4,jdbcType=VARCHAR},
+      extend5 = #{extend5,jdbcType=VARCHAR}
+    where timer_id = #{timerId,jdbcType=INTEGER}
+  </update>
+</mapper>

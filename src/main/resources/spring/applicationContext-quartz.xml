@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="
+       http://www.springframework.org/schema/beans
+		http://www.springframework.org/schema/beans/spring-beans-4.2.xsd"
+       default-lazy-init="false">
+    <description>Quartz Configuration</description>
+    <bean id="jobFactory" class="com.dgd.quartz.factory.JobFactory"></bean>
+    <bean id="quartzScheduler" lazy-init="false" autowire="no" class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+        <property name="configLocation" value="classpath:config/quartz.properties" />
+        <property name="jobFactory" ref="jobFactory"></property>
+        <property name="applicationContextSchedulerContextKey" value="applicationContextKey"></property>
+
+    </bean>
+</beans>

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://generator.mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+
+<generatorConfiguration>
+
+    <!--<classPathEntry location="C:/Users/DaiGuodong/.m2/repository/mysql/mysql-connector-java/5.1.36/mysql-connector-java-5.1.36.jar"/>-->
+    <classPathEntry location="C:/Users/DaiGuodong/.m2/repository/mysql/mysql-connector-java/5.1.36/mysql-connector-java-5.1.36.jar"/>
+    <context id="mysqlTables" defaultModelType="flat" targetRuntime="MyBatis3">
+        <!--<plugin type="mybatis.generator.MybatisUUIDKeyPlugin"/>-->
+        <plugin type="com.dgd.mybatis.MybatisGeneratorExtPlugin"/>
+        <plugin type="com.dgd.mybatis.SerializablePlugin"/>
+        <commentGenerator>
+            <property name="suppressAllComments" value="true"/>
+            <property name="suppressDate" value="true"/>
+        </commentGenerator>
+
+        <jdbcConnection driverClass="com.mysql.jdbc.Driver"
+                        connectionURL="jdbc:mysql://219.128.77.92:14805/test?useUnicode=true&amp;characterEncoding=UTF-8&amp;allowMultiQueries=true"
+                        userId="root"
+                        password="j58k9rptn7qw4">
+        </jdbcConnection>
+        <javaTypeResolver>
+            <property name="forceBigDecimals" value="false"/>
+        </javaTypeResolver>
+        <javaModelGenerator targetPackage="com.dgd.entity" targetProject="src/main/java">
+            <property name="enableSubPackages" value="false"/>
+            <property name="trimStrings" value="true"/>
+        </javaModelGenerator>
+        <sqlMapGenerator targetPackage="com.dgd.persistence.mapper" targetProject="src/main/java">
+            <property name="enableSubPackages" value="true"/>
+        </sqlMapGenerator>
+        <javaClientGenerator targetPackage="com.dgd.persistence.dao" targetProject="src/main/java" type="XMLMAPPER">
+            <property name="enableSubPackages" value="true"/>
+        </javaClientGenerator>
+
+        <table tableName="t_timer_manage">
+            <generatedKey column="timer_id" sqlStatement="MySql" type="post" identity="true"/>
+        </table>
+    </context>
+
+</generatorConfiguration>
